@@ -1,0 +1,13 @@
+version = 0.1
+
+[default.build.parameters]
+profile = "default"
+
+[default.deploy.parameters]
+stack_name = "django-lambda-stack"
+region = "us-east-1"
+profile = "default"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repository = "553075658794.dkr.ecr.us-east-1.amazonaws.com/new_trueread_prod_12"
+disable_rollback = false

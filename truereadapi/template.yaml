@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Django REST API deployed as a Containerized Lambda with SAM
+
+Globals:
+  Function:
+    # Set default Memory and Timeout for all functions
+    MemorySize: 512
+    Timeout: 30
+
+Resources:
+  DjangoLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: django  # ← ADD THIS LINE to use your existing Lambda
+      # Use PackageType: Image for container deployment
+      PackageType: Image
+      # Handler is defined in Dockerfile CMD, but keep it here for reference
+      # Events define how the function is triggered
+      Events:
+        ApiGateway:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+    Metadata:
+      # Tell SAM how to build the Docker image
+      Dockerfile: Dockerfile
+      DockerContext: ./
+      DockerTag: python3.11-v1
+
+Outputs:
+  DjangoApiUrl:
+    Description: "API Gateway endpoint URL for your Django Lambda function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
