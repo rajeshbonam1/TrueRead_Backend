@@ -97,6 +97,7 @@ WSGI_APPLICATION = "truereadapi.wsgi.application"
 # }
 
 DATABASES = {
+<<<<<<< HEAD
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
        'NAME': 'truereadlinkprod',
@@ -107,6 +108,23 @@ DATABASES = {
    }
 }
 
+=======
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'truereadlinkprod',
+        'USER': 'proddb',
+        'PASSWORD': 'Sujanix#123',
+        'HOST': 'database-2.cluster-cnwt7lfswwdc.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+
+        # Tell PostgreSQL/Django to use the trueread_p3 schema
+        # instead of the default public schema.
+        'OPTIONS': {
+            'options': '-c search_path=trueread_p3',
+        },
+    }
+}
+>>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

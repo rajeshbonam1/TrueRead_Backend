@@ -11,6 +11,32 @@ from datetime import date, timedelta
 from django.shortcuts import render
 from rest_framework.response import Response
 import requests
+<<<<<<< HEAD
+=======
+# Import Python's built-in date utilities.
+#
+# date:
+# Used to get today's date and work with calendar dates.
+#
+# timedelta:
+# Used to add or subtract a specific number of days from a date.
+from datetime import date, timedelta
+
+
+# Import Django's JsonResponse class.
+#
+# JsonResponse allows this API endpoint to return Python data
+# as a JSON response that can be consumed by the React frontend.
+from django.http import JsonResponse
+
+
+# Import the Consumers model.
+#
+# This model is connected to the `readingmaster` database table
+# and is used to retrieve consumer and meter reading data.
+from api.models import Consumers
+
+>>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 from rest_framework.decorators import api_view, permission_classes
 from .models import Consumers, MeterReaderRegistration, Office, SupervisorLogin, UserManagement
 from .serializers import (
@@ -71,8 +97,279 @@ from django_filters import FilterSet
 
 SECRETKEY = "6AZJYQ2T317WGPXC0UHVLDOR49FIBS8N5ME"
 
+<<<<<<< HEAD
 @parser_classes([MultiPartParser, FormParser])
 @api_view(["POST"])
+=======
+# ============================================================
+# DASHBOARD — READING CYCLE API
+# ============================================================
+
+def dashboard_reading_cycle(request):
+    """
+    Return Reading Cycle metrics for the dashboard.
+
+    The current implementation treats one calendar month as
+    one reading cycle.
+
+    Returned values:
+
+    - total:
+      Number of consumers with completed readings.
+
+    - expected:
+      Total number of consumers expected in the current cycle.
+
+    - dayOfCycle:
+      Current day of the reading cycle.
+
+    - cycleDays:
+      Total number of days in the current cycle.
+
+    - workingLeft:
+      Number of remaining days in the cycle.
+
+    - actualPace:
+      Average number of readings completed per day during
+      the most recent 7 days.
+    """
+
+    # --------------------------------------------------
+    # GET TODAY'S DATE
+    # --------------------------------------------------
+
+    # Get the current server date.
+    #
+    # Example:
+    # 11 September 2026
+    today = date.today()
+
+
+    # ==================================================
+    # DETERMINE THE CURRENT READING CYCLE
+    # ==================================================
+
+    # The reading cycle currently follows the calendar month.
+    #
+    # Example:
+    # If today is 11 Sep 2026:
+    #
+    # cycle_start → 01 Sep 2026
+    cycle_start = today.replace(day=1)
+
+
+    # --------------------------------------------------
+    # CALCULATE THE FIRST DAY OF THE NEXT MONTH
+    # --------------------------------------------------
+
+    # December requires special handling because the next
+    # month belongs to the following year.
+    if today.month == 12:
+
+        # Example:
+        #
+        # 01 Dec 2026
+        #      ↓
+        # 01 Jan 2027
+        next_month = today.replace(
+            year=today.year + 1,
+            month=1,
+            day=1
+        )
+
+    else:
+
+        # For every other month, move to the first day
+        # of the next month.
+        #
+        # Example:
+        #
+        # September
+        #     ↓
+        # 01 October
+        next_month = today.replace(
+            month=today.month + 1,
+            day=1
+        )
+
+
+    # --------------------------------------------------
+    # CALCULATE THE LAST DAY OF THE CURRENT CYCLE
+    # --------------------------------------------------
+
+    # The last day of the current month is one day before
+    # the first day of the next month.
+    #
+    # Example:
+    #
+    # next_month → 01 Oct 2026
+    #
+    # cycle_end → 30 Sep 2026
+    cycle_end = next_month - timedelta(days=1)
+
+
+    # ==================================================
+    # EXPECTED CONSUMERS
+    # ==================================================
+
+    # Retrieve all consumer records belonging to the
+    # current billing month.
+    #
+    # bill_month_dt is a DateField in the Consumers model,
+    # making it suitable for date-based filtering.
+    #
+    # The resulting count represents the total number of
+    # consumers expected to be processed during this cycle.
+    expected = Consumers.objects.filter(
+
+        # Include records from the first day of the cycle.
+        bill_month_dt__gte=cycle_start,
+
+        # Include records up to the final day of the cycle.
+        bill_month_dt__lte=cycle_end,
+
+    ).count()
+
+
+    # ==================================================
+    # COMPLETED READINGS
+    # ==================================================
+
+    # Count consumer records that belong to the current
+    # billing cycle and have a completed reading date.
+    #
+    # A non-null reading_date_db is currently treated as
+    # an indication that a meter reading was completed.
+    total = Consumers.objects.filter(
+
+        # Only include consumers from the current cycle.
+        bill_month_dt__gte=cycle_start,
+        bill_month_dt__lte=cycle_end,
+
+        # Only include consumers with a recorded reading date.
+        reading_date_db__isnull=False,
+
+    ).count()
+
+
+    # ==================================================
+    # CYCLE INFORMATION
+    # ==================================================
+
+    # Get the current day number within the month.
+    #
+    # Example:
+    #
+    # 11 September → day 11
+    day_of_cycle = today.day
+
+
+    # Get the total number of days in the current month.
+    #
+    # Example:
+    #
+    # September → 30 days
+    # August    → 31 days
+    cycle_days = cycle_end.day
+
+
+    # Calculate the number of calendar days remaining
+    # in the current reading cycle.
+    #
+    # Example:
+    #
+    # Cycle length → 30 days
+    # Current day  → 11
+    #
+    # Remaining → 19 days
+    #
+    # Note:
+    # This currently counts calendar days and does not
+    # exclude weekends or holidays.
+    working_left = cycle_days - day_of_cycle
+
+
+    # ==================================================
+    # ACTUAL PACE — MOST RECENT 7 DAYS
+    # ==================================================
+
+    # Calculate the date six days before today.
+    #
+    # Including today creates a seven-day window.
+    #
+    # Example:
+    #
+    # Today → 11 Sep
+    #
+    # Start → 05 Sep
+    #
+    # Range → 05 Sep to 11 Sep
+    seven_days_ago = today - timedelta(days=6)
+
+
+    # Count all readings completed during the most recent
+    # seven-day period.
+    readings_last_7_days = Consumers.objects.filter(
+
+        # Include readings from the beginning of the
+        # seven-day window.
+        reading_date_db__gte=seven_days_ago,
+
+        # Include readings up to today.
+        reading_date_db__lte=today,
+
+    ).count()
+
+
+    # Calculate the average number of readings completed
+    # per day during the last seven days.
+    #
+    # Example:
+    #
+    # 7,000 readings
+    # ───────────── = 1,000 readings per day
+    #      7
+    actual_pace = round(
+        readings_last_7_days / 7,
+        2
+    )
+
+
+    # ==================================================
+    # RETURN API RESPONSE
+    # ==================================================
+
+    # Return the calculated metrics as JSON.
+    #
+    # The property names intentionally match the data
+    # structure expected by the React CycleStatus component.
+    return JsonResponse({
+
+        # Total completed readings in the current cycle.
+        "total": total,
+
+        # Total consumers expected in the current cycle.
+        "expected": expected,
+
+        # Current day of the cycle.
+        "dayOfCycle": day_of_cycle,
+
+        # Total days in the cycle.
+        "cycleDays": cycle_days,
+
+        # Remaining calendar days in the cycle.
+        "workingLeft": working_left,
+
+        # Average daily reading pace over the last 7 days.
+        "actualPace": actual_pace,
+
+    })
+
+
+@parser_classes([MultiPartParser, FormParser])
+@api_view(["POST"])
+
+>>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 def consumers(request):
     data = request.data.copy()
     # _mutable = data._mutable

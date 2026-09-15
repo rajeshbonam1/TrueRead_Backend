@@ -21,6 +21,16 @@ urlpatterns = [
         name='registerupdate'
     ),
 
+<<<<<<< HEAD
+=======
+    # CycleStatus
+    path(
+    'dashboard/reading-cycle/',
+    views.dashboard_reading_cycle,
+    name='dashboard-reading-cycle'
+    ),
+    
+>>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
     # Login
     path(
         'login/',
