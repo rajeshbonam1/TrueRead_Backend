@@ -97,18 +97,6 @@ WSGI_APPLICATION = "truereadapi.wsgi.application"
 # }
 
 DATABASES = {
-<<<<<<< HEAD
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'truereadlinkprod',
-       'USER': 'proddb',
-       'PASSWORD': 'Sujanix#123',
-       'HOST': 'database-2.cluster-cnwt7lfswwdc.us-east-1.rds.amazonaws.com',
-       'PORT': '5432',
-   }
-}
-
-=======
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'truereadlinkprod',
@@ -124,7 +112,6 @@ DATABASES = {
         },
     }
 }
->>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

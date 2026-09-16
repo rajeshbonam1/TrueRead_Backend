@@ -11,8 +11,6 @@ from datetime import date, timedelta
 from django.shortcuts import render
 from rest_framework.response import Response
 import requests
-<<<<<<< HEAD
-=======
 # Import Python's built-in date utilities.
 #
 # date:
@@ -36,7 +34,6 @@ from django.http import JsonResponse
 # and is used to retrieve consumer and meter reading data.
 from api.models import Consumers
 
->>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 from rest_framework.decorators import api_view, permission_classes
 from .models import Consumers, MeterReaderRegistration, Office, SupervisorLogin, UserManagement
 from .serializers import (
@@ -97,10 +94,6 @@ from django_filters import FilterSet
 
 SECRETKEY = "6AZJYQ2T317WGPXC0UHVLDOR49FIBS8N5ME"
 
-<<<<<<< HEAD
-@parser_classes([MultiPartParser, FormParser])
-@api_view(["POST"])
-=======
 # ============================================================
 # DASHBOARD — READING CYCLE API
 # ============================================================
@@ -369,7 +362,6 @@ def dashboard_reading_cycle(request):
 @parser_classes([MultiPartParser, FormParser])
 @api_view(["POST"])
 
->>>>>>> b85f512 (Connect dashboard reading cycle to backend API)
 def consumers(request):
     data = request.data.copy()
     # _mutable = data._mutable
