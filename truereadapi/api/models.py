@@ -1,184 +1,721 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
-# Create your models here.
-
-#  Custom User Manager
-
-class Consumers(models.Model):
-    ofc_discom=models.CharField(max_length=300,null=True,blank=True)
-    ofc_zone=models.CharField(max_length=300,null=True,blank=True)
-    ofc_circle= models.CharField(max_length=300,null=True,blank=True)
-    ofc_division=models.CharField(max_length=300,null=True,blank=True)
-    ofc_sub_div_code= models.CharField(max_length=300,null=True,blank=True)
-    ofc_subdivision=models.CharField(max_length=300,null=True,blank=True)
-    ofc_section=models.CharField(max_length=300, null=True,blank=True)
-    mr_unit=models.CharField(max_length=300, null=True,blank=True)
-    bl_area_code=models.CharField(max_length=300, null=True,blank=True)
-    bl_agnc_type=models.CharField(max_length=300,null=True,blank=True)
-    bl_agnc_name= models.CharField(max_length=300,null=True,blank=True)
-    mr_id= models.CharField(max_length=300,null=True,blank=True)
-    mr_ph_no=models.CharField(max_length=300, null=True,blank=True)
-    cons_ac_no= models.CharField(max_length=300, null=True,blank=True)
-    cons_name= models.CharField(max_length=300,null=True,blank=True)
-    cons_address= models.CharField(max_length=300,null=True,blank=True)
-    cons_ph_no=models.CharField(max_length=300,null=True,blank=True)
-    cons_vill_name=models.CharField(max_length=300,null=True,blank=True)
-    cons_fdr_name=models.CharField(max_length=300,null=True,blank=True)
-    con_dtc=models.CharField(max_length=300,null=True,blank=True)
-    con_trf_cat=models.CharField(max_length=300,null=True,blank=True)
-    con_mtr_sl_no= models.CharField(max_length=300, null=True,blank=True)
-    con_mtr_phs= models.CharField(max_length=300,null=True,blank=True)
-    rdng_inc_deci=models.CharField(max_length=300,null=True,blank=True)
-    rdng_req_val= models.CharField(max_length=300,null=True,blank=True)
-    prev_rdng=models.CharField(max_length=300,null=True,blank=True)
-    prev_md= models.CharField(max_length=300,null=True,blank=True)
-    prev_pf_rdng=models.CharField(max_length=300,null=True,blank=True)
-    prev_rdng_date=models.CharField(max_length=300,null=True,blank=True)
-    prev_bl_mnth=models.CharField(max_length=300,null=True,blank=True)
-    prev_rdng_status=models.CharField(max_length=300,null=True,blank=True)
-    bl_mnth= models.CharField(max_length=300,null=True,blank=True)
-    rdng_date= models.CharField(max_length=300,null=True,blank=True)
-    geo_lat=models.CharField(max_length=300,null=True,blank=True)
-    geo_long=models.CharField(max_length=300,null=True,blank=True)
-    prsnt_mtr_status=models.CharField(max_length=300,null=True,blank=True)
-    abnormality= models.CharField(max_length=300,null=True,blank=True)
-    mr_rmrk= models.CharField(max_length=300,null=True,blank=True)
-    mtr_excep_img= models.CharField(max_length=300,null=True,blank=True)
-    rdng_ocr_status=models.CharField(max_length=300,null=True,blank=True)
-    prsnt_ocr_rdng=models.CharField(max_length=300,null=True,blank=True)
-    prsnt_rdng=models.CharField(max_length=300, null=True,blank=True)
-    prsnt_rdng_ocr_excep=models.CharField(max_length=300,null=True,blank=True)
-    rdng_img= models.CharField(max_length=300,null=True,blank=True)
-    ocr_md_status= models.CharField(max_length=300,null=True,blank=True)
-    prsnt_md_rdng_ocr=models.CharField(max_length=300,null=True,blank=True)
-    prsnt_md_rdng=models.CharField(max_length=300,null=True,blank=True)
-    md_ocr_excep=models.CharField(max_length=300,null=True,blank=True)
-    md_img=models.CharField(max_length=300,null=True,blank=True)
-    ocr_pf_status=models.CharField(max_length=300,null=True,blank=True)
-    ocr_pf_reading= models.CharField(max_length=300,null=True,blank=True)
-    pf_image=models.CharField(max_length=300,null=True,blank=True)
-    pf_manual_reading=models.CharField(max_length=300,null=True,blank=True)
-    pf_ocr_exception=models.CharField(max_length=300,null=True,blank=True)
-    ai_mdl_ver=models.CharField(max_length=300,null=True,blank=True)
-    ph_name= models.CharField(max_length=300,null=True,blank=True)
-    cmra_res=models.CharField(max_length=300,null=True,blank=True)
-    andr_ver= models.CharField(max_length=300,null=True,blank=True)
-    data_sync_date=models.CharField(max_length=300,null=True,blank=True)
-    qc_req= models.CharField(max_length=300,null=True,blank=True)
-    ba_cons_id=models.CharField(max_length=300,null=True,blank=True)
-    ba_ac_id= models.CharField(max_length=300,null=True,blank=True)
-    ba_prsnt_rdng_status= models.CharField(max_length=300,null=True,blank=True)
-    ba_mrc= models.CharField(max_length=300,null=True,blank=True)
-    ba_mru=models.CharField(max_length=300,null=True,blank=True)
-    ba_subdiv=models.CharField(max_length=300,null=True,blank=True)
-    ba_div= models.CharField(max_length=300,null=True,blank=True)
-    ba_geo_lati=models.CharField(max_length=300,null=True,blank=True)
-    ba_geo_long=models.CharField(max_length=300,null=True,blank=True)
-    ba_agnc_id=models.CharField(max_length=300,null=True,blank=True)
-    ba_bl_id= models.CharField(max_length=300,null=True,blank=True)
-    ba_bl_date= models.CharField(max_length=300,null=True,blank=True)
-    ba_prev_rdng_status=models.CharField(max_length=300,null=True,blank=True)
-    qc_done=models.CharField(max_length=300,null=True,blank=True)
-    qc_done_user_id=models.CharField(max_length=300,null=True,blank=True)
-    qc_date= models.CharField(max_length=300,null=True,blank=True)
-    qc_flag=models.CharField(max_length=300,null=True,blank=True)
-    qc_rmrk= models.CharField(max_length=300,null=True,blank=True)
-    ai_retrain= models.CharField(max_length=300,null=True,blank=True)
-    ocr_status= models.CharField(max_length=300,null=True,blank=True)
-    uploaded_datetime=models.DateTimeField(auto_now_add=True)
-    is_object_meter=models.CharField(max_length=300,null=True,blank=True)
-    mr_success_feedback=models.CharField(max_length=300,null=True,blank=True)
-    reading_parameter_type=models.CharField(max_length=300,null=True,blank=True)
-    md_reading_parameter_type=models.CharField(max_length=300,null=True,blank=True)
-    pf_reading_parameter_type=models.CharField(max_length=300,null=True,blank=True)
-    bill_month_dt=models.DateField(null=True,blank=True)
-    prsnt_rdng_ocr_odv=models.CharField(max_length=100,null=True,blank=True)
-    rdng_ocr_status_odv=models.CharField(max_length=100,null=True,blank=True)
-    rdng_ocr_status_changed_by=models.CharField(max_length=100,null=True,blank=True)
-    date_qc= models.CharField(max_length=300,null=True,blank=True)
-    kvah_manual = models.CharField( max_length= 200, null=True,  blank=True)
-    kvah_Status = models.CharField( max_length= 200, null=True,  blank=True)
-    mtr_sr_no = models.CharField( max_length= 200, null=True,  blank=True)
-   
-
-    #qc fields
-    abnormalities_confirm=models.CharField(max_length=300,null=True,blank=True)
-    ocrexception_confirm=models.CharField(max_length=300,null=True,blank=True)
-    qc_recommendation=models.CharField(max_length=300,null=True,blank=True)
-    qc_report_action=models.CharField(max_length=300,null=True,blank=True)
-    qc_meter_status=models.CharField(max_length=300,null=True,blank=True)
-    qc_ocr_status=models.CharField(max_length=300,null=True,blank=True)
-    reading_date_db=models.DateField(null=True,blank=True)
-    manual_update_flag=models.CharField( max_length=50,null=True,blank=True)
-    prsnt_ocr_excep_old_values=models.CharField( max_length=50,null=True,blank=True)
-    
-    #kvah readings
-    kvah_rdng = models.CharField( max_length=200, null=True, blank=True)
-    kvah_img = models.CharField( max_length= 200, null=True,  blank=True)
-    kvah_manual = models.CharField( max_length= 200, null=True,  blank=True)
-    kvah_Status = models.CharField( max_length= 200, null=True,  blank=True)
-
-    #spoofed_status
-    is_spoofed = models.BooleanField(default=False)
-
-    #ekwh and ekvah data
-    ekwh_img = models.CharField( max_length=300, null=True, blank=True)
-    ekwh_ocr_rdng = models.CharField( max_length=300, null=True, blank=True)
-    ekwh_manual_rdng = models.CharField( max_length=300, null=True, blank=True)
-    ekvah_img = models.CharField( max_length=300, null=True, blank=True)
-    ekvah_ocr_rdng = models.CharField( max_length=300, null=True, blank=True)
-    ekvah_manual_rdng = models.CharField( max_length=300, null=True, blank=True)
-
-    #ekvah 
-    calculatedkvah = models.CharField(max_length=300, null=True, blank=True)
-    calculatedkva = models.CharField(max_length=300, null=True, blank=True)
-
- 
-    
-
-    
-    class Meta:
-        db_table='readingmaster'
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
+# ============================================================
+# REFERENCE TABLES
+# ============================================================
 
-class MeterReaderRegistration(models.Model):
 
-    mrId=models.CharField(max_length=200,unique=True)
-    mrName=models.CharField(max_length=200,null=True,blank=True)
-    
-    section=models.CharField(max_length=200,null=True,blank=True)
-
-    discom=models.CharField(max_length=200,null=True,blank=True)
-    zone=models.CharField(max_length=200,null=True,blank=True)
-    circle=models.CharField(max_length=200,null=True,blank=True)
-    division=models.CharField(max_length=200,null=True,blank=True)
-    subdivision=models.CharField(max_length=200,null=True,blank=True)
-    sectioncode=models.CharField(max_length=200,null=True,blank=True)
-    
-    mrPhone=models.CharField(max_length=200,null=True,blank=True)
-    mrPhoto=models.CharField(max_length=200,null=True,blank=True)
-    androidToken=models.CharField(max_length=200,null=True,blank=True)
-    uploaded_datetime=models.DateTimeField(auto_now_add=True)
+class Abnormality(models.Model):
+    abnormality_id = models.SmallAutoField(primary_key=True)
+    abnormality_code = models.CharField(max_length=100, unique=True)
+    abnormality_label = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
 
     class Meta:
-        db_table='meterreaderregistration'
-        
+        managed = False
+        db_table = "abnormality"
+
+    def __str__(self):
+        return self.abnormality_label
+
+
+class Agency(models.Model):
+    agency_id = models.SmallAutoField(primary_key=True)
+    agency_code = models.CharField(max_length=30, unique=True)
+    agency_name = models.CharField(max_length=100)
+    agency_type = models.CharField(
+        max_length=10,
+        null=True,
+        blank=True,
+    )
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "agency"
+
+    def __str__(self):
+        return self.agency_name
+
+
+class ImageCheck(models.Model):
+    image_check_id = models.SmallAutoField(primary_key=True)
+    check_code = models.CharField(max_length=30, unique=True)
+    check_label = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "image_check"
+
+    def __str__(self):
+        return self.check_label
+
+
+class MeterPhase(models.Model):
+    meter_phase_id = models.SmallAutoField(primary_key=True)
+    phase_code = models.CharField(max_length=10, unique=True)
+    phase_label = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "meter_phase"
+
+    def __str__(self):
+        return self.phase_label
+
+
+class MeterStatus(models.Model):
+    meter_status_id = models.SmallAutoField(primary_key=True)
+    status_code = models.CharField(max_length=20, unique=True)
+    status_label = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "meter_status"
+
+    def __str__(self):
+        return self.status_label
+
+
+class OcrException(models.Model):
+    ocr_exception_id = models.SmallAutoField(primary_key=True)
+    exception_code = models.CharField(max_length=100, unique=True)
+    exception_label = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "ocr_exception"
+
+    def __str__(self):
+        return self.exception_label
+
+
+class OcrStatus(models.Model):
+    ocr_status_id = models.SmallAutoField(primary_key=True)
+    status_code = models.CharField(max_length=20, unique=True)
+    status_label = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "ocr_status"
+
+    def __str__(self):
+        return self.status_label
+
+
+# ============================================================
+# OFFICE
+# ============================================================
+
 
 class Office(models.Model):
-    discom=models.CharField(max_length=200)
-    zone=models.CharField(max_length=200)
-    circlename=models.CharField(max_length=200)
-    divisionname=models.CharField(max_length=200)
-    divisioncode=models.CharField(max_length=200)
-    subdivision=models.CharField(max_length=200)
-    subdivisioncode=models.CharField(max_length=200)
-    sectionname=models.CharField(max_length=200)
-    sectioncode=models.CharField(max_length=200)
-    agency=models.CharField(max_length=200,null=True,blank=True)
-    agencycode=models.CharField(max_length=200,null=True,blank=True)
+    office_id = models.AutoField(primary_key=True)
+
+    discom_name = models.CharField(max_length=50)
+
+    zone_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    circle_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    division_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    division_code = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    subdivision_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    subdivision_code = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    section_name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    section_code = models.CharField(max_length=20)
+
+    agency_name = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    agency = models.ForeignKey(
+        Agency,
+        on_delete=models.DO_NOTHING,
+        db_column="agency_id",
+        null=True,
+        blank=True,
+        related_name="offices",
+    )
+
+    is_provisional = models.BooleanField(default=False)
+
     class Meta:
-        db_table='office'
+        managed = False
+        db_table = "office"
+
+    def __str__(self):
+        return self.section_name or str(self.office_id)
+
+
+# ============================================================
+# METER READER
+# ============================================================
+
+
+class MeterReader(models.Model):
+    meter_reader_id = models.AutoField(primary_key=True)
+
+    reader_code = models.CharField(max_length=20)
+
+    reader_name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    phone_no = models.CharField(
+        max_length=15,
+        null=True,
+        blank=True,
+    )
+
+    photo_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    office = models.ForeignKey(
+        Office,
+        on_delete=models.DO_NOTHING,
+        db_column="office_id",
+        null=True,
+        blank=True,
+        related_name="meter_readers",
+    )
+
+    created_at = models.DateTimeField()
+
+    is_provisional = models.BooleanField(default=False)
+
+    class Meta:
+        managed = False
+        db_table = "meter_reader"
+
+    def __str__(self):
+        return self.reader_name or self.reader_code
+
+
+# ============================================================
+# METER READING
+# ============================================================
+
+
+class MeterReading(models.Model):
+    reading_id = models.BigAutoField(primary_key=True)
+
+    consumer_account_no = models.CharField(max_length=20)
+
+    office = models.ForeignKey(
+        Office,
+        on_delete=models.DO_NOTHING,
+        db_column="office_id",
+        related_name="meter_readings",
+    )
+
+    billing_month = models.DateField()
+
+    read_at = models.DateTimeField()
+
+    agency = models.ForeignKey(
+        Agency,
+        on_delete=models.DO_NOTHING,
+        db_column="agency_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    meter_reader = models.ForeignKey(
+        MeterReader,
+        on_delete=models.DO_NOTHING,
+        db_column="meter_reader_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    billing_area_code = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    consumer_name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    tariff_category = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+    )
+
+    meter_serial_no = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+    )
+
+    meter_type = models.CharField(
+        max_length=30,
+        null=True,
+        blank=True,
+    )
+
+    meter_phase = models.ForeignKey(
+        MeterPhase,
+        on_delete=models.DO_NOTHING,
+        db_column="meter_phase_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    meter_multiplication_factor = models.DecimalField(
+        max_digits=10,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+
+    previous_read_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    previous_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    meter_status = models.ForeignKey(
+        MeterStatus,
+        on_delete=models.DO_NOTHING,
+        db_column="meter_status_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    # --------------------------------------------------------
+    # KWH
+    # --------------------------------------------------------
+
+    kwh_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    kwh_ocr_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    kwh_ocr_status = models.ForeignKey(
+        OcrStatus,
+        on_delete=models.DO_NOTHING,
+        db_column="kwh_ocr_status_id",
+        null=True,
+        blank=True,
+        related_name="kwh_readings",
+    )
+
+    kwh_ocr_exception = models.ForeignKey(
+        OcrException,
+        on_delete=models.DO_NOTHING,
+        db_column="kwh_ocr_exception_id",
+        null=True,
+        blank=True,
+        related_name="kwh_readings",
+    )
+
+    kwh_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    kwh_parameter_type = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    kwh_img_check = models.ForeignKey(
+        ImageCheck,
+        on_delete=models.DO_NOTHING,
+        db_column="kwh_img_check_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    # --------------------------------------------------------
+    # READING METADATA
+    # --------------------------------------------------------
+
+    reader_remark = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+
+    abnormality = models.ForeignKey(
+        Abnormality,
+        on_delete=models.DO_NOTHING,
+        db_column="abnormality_id",
+        null=True,
+        blank=True,
+        related_name="meter_readings",
+    )
+
+    latitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        null=True,
+        blank=True,
+    )
+
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        null=True,
+        blank=True,
+    )
+
+    is_spoofed = models.BooleanField(
+        null=True,
+        blank=True,
+    )
+
+    change_type = models.SmallIntegerField(
+        null=True,
+        blank=True,
+    )
+
+    uploaded_at = models.DateTimeField()
+
+    synced_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    content_hash = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        managed = False
+        db_table = "meter_reading"
+
+    def __str__(self):
+        return self.consumer_account_no
+
+
+# ============================================================
+# METER READING DETAIL
+# ============================================================
+
+
+class MeterReadingDetail(models.Model):
+    reading = models.OneToOneField(
+        MeterReading,
+        on_delete=models.CASCADE,
+        db_column="reading_id",
+        primary_key=True,
+        related_name="detail",
+    )
+
+    # --------------------------------------------------------
+    # MD
+    # --------------------------------------------------------
+
+    md_reading = models.DecimalField(
+        max_digits=10,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+
+    md_ocr_reading = models.DecimalField(
+        max_digits=10,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+
+    md_ocr_status = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    md_ocr_exception = models.ForeignKey(
+        OcrException,
+        on_delete=models.DO_NOTHING,
+        db_column="md_ocr_exception_id",
+        null=True,
+        blank=True,
+        related_name="md_details",
+    )
+
+    md_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    md_parameter_type = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    # --------------------------------------------------------
+    # POWER FACTOR
+    # --------------------------------------------------------
+
+    pf_reading = models.DecimalField(
+        max_digits=4,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+
+    pf_ocr_reading = models.DecimalField(
+        max_digits=4,
+        decimal_places=3,
+        null=True,
+        blank=True,
+    )
+
+    pf_ocr_status = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    pf_ocr_exception = models.ForeignKey(
+        OcrException,
+        on_delete=models.DO_NOTHING,
+        db_column="pf_ocr_exception_id",
+        null=True,
+        blank=True,
+        related_name="pf_details",
+    )
+
+    pf_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    pf_parameter_type = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
+
+    # --------------------------------------------------------
+    # KVAH / KVA
+    # --------------------------------------------------------
+
+    kvah_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    kvah_ocr_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    kvah_ocr_status = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    kvah_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    calculated_kvah = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    calculated_kva = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    # --------------------------------------------------------
+    # EKWH / EKVAH
+    # --------------------------------------------------------
+
+    ekwh_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    ekwh_ocr_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    ekwh_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    ekvah_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    ekvah_ocr_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    ekvah_img_key = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        managed = False
+        db_table = "meter_reading_detail"
+
+
+# ============================================================
+# OCR OVERRIDE
+# ============================================================
+
+
+class OcrOverride(models.Model):
+    reading = models.OneToOneField(
+        MeterReading,
+        on_delete=models.CASCADE,
+        db_column="reading_id",
+        primary_key=True,
+        related_name="ocr_override",
+    )
+
+    overridden_ocr_reading = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
+
+    overridden_ocr_status = models.ForeignKey(
+        OcrStatus,
+        on_delete=models.DO_NOTHING,
+        db_column="overridden_ocr_status_id",
+        null=True,
+        blank=True,
+        related_name="ocr_overrides",
+    )
+
+    overridden_ocr_exception = models.ForeignKey(
+        OcrException,
+        on_delete=models.DO_NOTHING,
+        db_column="overridden_ocr_exception_id",
+        null=True,
+        blank=True,
+        related_name="ocr_overrides",
+    )
+
+    changed_by = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        managed = False
+        db_table = "ocr_override"
 
 class MyUserManager(BaseUserManager):
 
@@ -270,6 +807,7 @@ class UserManagement(AbstractBaseUser):
         return self.is_admin
     class Meta:
         db_table='usermanagement'
+        managed = False
 
 class NotificationMani(models.Model):
     message_type=models.CharField(max_length=200,null=True,blank=True)
