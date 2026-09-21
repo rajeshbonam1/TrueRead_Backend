@@ -26,7 +26,11 @@ SECRET_KEY = "django-insecure-o7m#rqcf7yc1b^1yj1-8#1=px(yf*2t#-*i#=ab*($o*w!)-b$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*",'http://localhost:3000']
+ALLOWED_HOSTS = [    
+    "trueread-backend-netlify.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -184,6 +188,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 
     "http://127.0.0.1:3000",
+
+    "https://trueread-netlify.netlify.app",
 
 ]
 
