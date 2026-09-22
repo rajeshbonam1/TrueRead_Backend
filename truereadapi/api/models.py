@@ -810,35 +810,144 @@ class UserManagement(AbstractBaseUser):
         managed = False
 
 class NotificationMani(models.Model):
-    message_type=models.CharField(max_length=200,null=True,blank=True)
-    notification_criteria=models.CharField(max_length=200,null=True,blank=True)
-    location_id=models.CharField(max_length=200,null=True,blank=True)
-    notification_status=models.CharField(max_length=200,null=True,blank=True)
-    message_image_url=models.CharField(max_length=350,null=True,blank=True)
-    message_title=models.CharField(max_length=200,null=True,blank=True)
-    message_content=models.CharField(max_length=200,null=True,blank=True)
-    message_schedule_type=models.CharField(max_length=200,null=True,blank=True)
-    Message_delivery_date_time=models.DateTimeField(auto_now_add=True)
-    scheduled_time=models.CharField(max_length=200,null=True,blank=True)
-    class Meta:
-        db_table='notification_main'
+    id = models.BigAutoField(primary_key=True)
 
-    
-class notificatio_recepients(models.Model):
-    notification_id=models.ForeignKey(NotificationMani,on_delete=models.CASCADE)
-    mr_id=models.CharField(max_length=200,null=True,blank=True)
-    mr_name=models.CharField(max_length=200,null=True,blank=True)
-    mr_token_id=models.CharField(max_length=200,null=True,blank=True)
-    mr_mobile_number=models.CharField(max_length=200,null=True,blank=True)
-    mr_location_section_id=models.CharField(max_length=200,null=True,blank=True)
-    message_image_url=models.CharField(max_length=350,null=True,blank=True)
-    message_delivery_status=models.CharField(max_length=200,null=True,blank=True)
-    message_title=models.CharField(max_length=200,null=True,blank=True)
-    message_content=models.CharField(max_length=200,null=True,blank=True)
-    mr_agency=models.CharField(max_length=200,null=True,blank=True)
+    message_type = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    notification_criteria = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    location_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    notification_status = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_image_url = models.CharField(
+        max_length=350,
+        null=True,
+        blank=True,
+    )
+
+    message_title = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_content = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_schedule_type = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    Message_delivery_date_time = models.DateTimeField(
+        db_column="Message_delivery_date_time",
+    )
+
+    scheduled_time = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
     class Meta:
-        db_table='notification_recepients'        
-        
+        managed = False
+        db_table = "notification_main"
+
+
+class NotificationRecipients(models.Model):
+    id = models.BigAutoField(primary_key=True)
+
+    mr_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    mr_name = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    mr_token_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    mr_mobile_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    mr_location_section_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_image_url = models.CharField(
+        max_length=350,
+        null=True,
+        blank=True,
+    )
+
+    message_delivery_status = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_title = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    message_content = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    mr_agency = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
+
+    notification_id = models.ForeignKey(
+        NotificationMani,
+        on_delete=models.DO_NOTHING,
+        db_column="notification_id_id",
+        related_name="recipients",
+    )
+
+    class Meta:
+        managed = False
+        db_table = "notification_recepients"        
         
 from django.db import models
 

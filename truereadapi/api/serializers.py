@@ -4,7 +4,7 @@ from .models import (
     SupervisorLogin,
     UserManagement,
     NotificationMani,
-    notificatio_recepients,
+    NotificationRecipients,
 )
 
 from django.utils.encoding import (
@@ -288,7 +288,7 @@ class NotificationManiSerializer(serializers.ModelSerializer):
 
 class NotificationRecepientsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = notificatio_recepients
+        model = NotificationRecipients
         fields = [
             'notification_id',
             'mr_id',
